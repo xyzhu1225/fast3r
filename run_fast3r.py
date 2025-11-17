@@ -217,7 +217,9 @@ def run_fast3r(args):
     predictions["images"] = np.array([to_numpy(view['img'].cpu().squeeze().permute(1, 2, 0)) for view in output_dict['views']])
     predictions["extrinsic"] = np.array(camera_poses)[:, :3, :] # (N, 3, 4)
     predictions["intrinsic"] = intrinsic # (3, 3)
-
+    
+    predictions["world_points"] = pts3d
+    predictions["world_points_conf"] = conf
     os.makedirs(os.path.dirname(args.output_path), exist_ok=True)
     prediction_save_path = os.path.join("./tmp", "predictions_fast3r.npz")
 
